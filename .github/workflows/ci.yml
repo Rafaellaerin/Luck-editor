@@ -1,0 +1,43 @@
+name: Continuous Integration
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  extension:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --ignore-scripts
+      - run: npm run verify
+      - run: npm run package
+      - uses: actions/upload-artifact@v4
+        with:
+          name: luck-editor-extension
+          path: dist/luck-editor-extension.zip
+
+  rust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - run: cargo check --workspace --all-targets --manifest-path rust/Cargo.toml
+      - run: cargo clippy --workspace --all-targets --manifest-path rust/Cargo.toml
+      - run: cargo test --workspace --manifest-path rust/Cargo.toml
+
+  native:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S native -B native/build -DCMAKE_BUILD_TYPE=Release -DLUCK_ENABLE_SANITIZERS=ON
+      - run: cmake --build native/build --parallel
+      - run: ctest --test-dir native/build --output-on-failure

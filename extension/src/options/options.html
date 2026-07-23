@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Luck Editor Settings</title>
+  <link rel="stylesheet" href="../styles/tokens.css">
+  <link rel="stylesheet" href="../styles/base.css">
+  <link rel="stylesheet" href="../styles/components.css">
+  <link rel="stylesheet" href="../styles/options.css">
+</head>
+<body>
+  <header class="options-header">
+    <div>
+      <p class="eyebrow">EXTENSION CONTROL CENTER</p>
+      <h1 id="app-name">Luck Editor</h1>
+      <p class="options-lede">Review safety defaults, optional permissions, temporary storage, and the local audit log.</p>
+    </div>
+    <div class="version-block"><span>VERSION</span><strong id="app-version">5.0.0</strong></div>
+  </header>
+
+  <div class="options-layout">
+    <nav class="options-nav" aria-label="Settings sections">
+      <button class="nav-button is-active" type="button" aria-selected="true" data-section="settings">Safety settings</button>
+      <button class="nav-button" type="button" aria-selected="false" data-section="permissions">Permissions</button>
+      <button class="nav-button" type="button" aria-selected="false" data-section="storage">Storage</button>
+      <button class="nav-button" type="button" aria-selected="false" data-section="audit">Audit log</button>
+    </nav>
+
+    <main class="options-main">
+      <section data-section-view="settings">
+        <div class="section-heading">
+          <div><p class="eyebrow">SECURE DEFAULTS</p><h2>Safety settings</h2></div>
+        </div>
+        <p class="section-copy">These settings affect only this browser profile. Cookie values are never synchronized by Luck Editor.</p>
+        <div class="setting-cards">
+          <label class="setting-card"><input id="confirm-single" type="checkbox"><span><strong>Confirm single deletion</strong><small>Ask before deleting one cookie.</small></span></label>
+          <label class="setting-card"><input id="confirm-bulk" type="checkbox"><span><strong>Confirm bulk deletion</strong><small>Ask before destructive multi-cookie operations.</small></span></label>
+          <label class="setting-card"><input id="mask-values" type="checkbox"><span><strong>Mask values</strong><small>Hide cookie values in the popup list.</small></span></label>
+          <label class="setting-card"><input id="auto-refresh" type="checkbox"><span><strong>Reload after imports</strong><small>Reload the active tab after a successful import.</small></span></label>
+          <label class="setting-card"><input id="export-http-only" type="checkbox"><span><strong>Export HttpOnly cookies</strong><small>Allow exports to include cookies normally hidden from page scripts.</small></span></label>
+          <label class="setting-card"><input id="snapshot-values" type="checkbox"><span><strong>Snapshot values</strong><small>Keep values in temporary session snapshots instead of redacting them.</small></span></label>
+        </div>
+        <div class="toolbar options-actions">
+          <button id="save-settings" class="button button-primary" type="button">Save settings</button>
+          <button id="reset-settings" class="button button-danger" type="button">Reset secure defaults</button>
+        </div>
+      </section>
+
+      <section data-section-view="permissions" hidden>
+        <div class="section-heading">
+          <div><p class="eyebrow">LEAST PRIVILEGE</p><h2>Optional permissions</h2></div>
+          <span id="permission-count" class="status-chip">0 optional origins granted</span>
+        </div>
+        <p id="permission-mode" class="status-box">Checking permissions.</p>
+        <p class="section-copy">The popup normally uses temporary access to the active tab. All-sites access is optional and should be released when it is no longer needed.</p>
+        <div class="toolbar options-actions">
+          <button id="refresh-permissions" class="button" type="button">Refresh</button>
+          <button id="revoke-all-sites" class="button button-danger" type="button">Revoke all-sites access</button>
+        </div>
+        <div class="data-panel">
+          <h3>Granted origins</h3>
+          <p id="origin-empty" class="empty-note">No optional origins granted.</p>
+          <ul id="origin-list" class="plain-list"></ul>
+        </div>
+      </section>
+
+      <section data-section-view="storage" hidden>
+        <div class="section-heading">
+          <div><p class="eyebrow">LOCAL DATA</p><h2>Storage inspection</h2></div>
+          <button id="refresh-storage" class="button" type="button">Refresh</button>
+        </div>
+        <p class="section-copy">This page shows key names and structural summaries only. It does not render stored cookie values.</p>
+        <div class="storage-grid">
+          <section class="data-panel"><div class="data-panel-heading"><h3>Local settings</h3><span id="local-storage-count">0 keys</span></div><div id="local-storage-list" class="storage-list"></div></section>
+          <section class="data-panel"><div class="data-panel-heading"><h3>Session data</h3><span id="session-storage-count">0 keys</span></div><div id="session-storage-list" class="storage-list"></div></section>
+        </div>
+        <div class="toolbar options-actions">
+          <button id="clear-session" class="button button-danger" type="button">Clear temporary session data</button>
+          <button id="clear-settings" class="button button-danger" type="button">Delete local settings</button>
+        </div>
+      </section>
+
+      <section data-section-view="audit" hidden>
+        <div class="section-heading">
+          <div><p class="eyebrow">SESSION ONLY</p><h2>Local audit log</h2></div>
+          <span id="audit-count" class="status-chip">0 events</span>
+        </div>
+        <p class="section-copy">Audit events contain operation names, domains, counts, timestamps and short error summaries. Cookie values are not recorded.</p>
+        <div class="toolbar options-actions">
+          <button id="refresh-audit" class="button" type="button">Refresh</button>
+          <button id="clear-audit" class="button button-danger" type="button">Clear audit log</button>
+        </div>
+        <p id="audit-empty" class="empty-note">No audit events in this browser session.</p>
+        <div id="audit-list" class="audit-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <script type="module" src="./options.js"></script>
+</body>
+</html>

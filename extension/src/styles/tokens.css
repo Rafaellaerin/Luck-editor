@@ -1,0 +1,20 @@
+:root {
+  color-scheme: dark;
+  --black: #000000;
+  --white: #ffffff;
+  --white-92: rgb(255 255 255 / 92%);
+  --white-78: rgb(255 255 255 / 78%);
+  --white-60: rgb(255 255 255 / 60%);
+  --white-38: rgb(255 255 255 / 38%);
+  --white-20: rgb(255 255 255 / 20%);
+  --white-12: rgb(255 255 255 / 12%);
+  --white-07: rgb(255 255 255 / 7%);
+  --black-80: rgb(0 0 0 / 80%);
+  --black-50: rgb(0 0 0 / 50%);
+  --radius-small: 4px;
+  --radius: 8px;
+  --radius-large: 14px;
+  --shadow: 0 18px 60px rgb(0 0 0 / 80%);
+  --font-ui: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-code: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}

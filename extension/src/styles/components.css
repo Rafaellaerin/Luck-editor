@@ -1,0 +1,27 @@
+.button { min-height: 36px; padding: 7px 12px; border: 1px solid var(--white-38); border-radius: var(--radius-small); background: var(--black); color: var(--white); cursor: pointer; transition: background .12s ease, color .12s ease, border-color .12s ease; }
+.button:hover:not(:disabled) { border-color: var(--white); background: var(--white); color: var(--black); }
+.button-primary { border-color: var(--white); background: var(--white); color: var(--black); font-weight: 750; }
+.button-primary:hover:not(:disabled) { background: var(--black); color: var(--white); }
+.button-danger { border-style: dashed; }
+.button-small { min-height: 30px; padding: 5px 9px; font-size: 11px; }
+.button-wide { width: 100%; }
+.icon-button { width: 34px; height: 34px; border: 1px solid var(--white-38); border-radius: 50%; background: var(--black); color: var(--white); cursor: pointer; font-size: 20px; line-height: 1; }
+.toolbar { display: flex; align-items: center; gap: 8px; }
+.toolbar > input, .toolbar > .search-field { flex: 1; }
+.toolbar-secondary { flex-wrap: wrap; padding-top: 8px; }
+.tabs { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--white-20); border-bottom: 1px solid var(--white-20); }
+.tab { padding: 10px 6px; border: 0; border-right: 1px solid var(--white-12); background: var(--black); color: var(--white-60); cursor: pointer; font-size: 11px; font-weight: 700; }
+.tab:last-child { border-right: 0; }
+.tab:hover, .tab.is-active { background: var(--white); color: var(--black); }
+.option-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.option-grid label, .settings-list label { display: flex; align-items: center; gap: 8px; min-height: 34px; padding: 7px 9px; border: 1px solid var(--white-20); border-radius: var(--radius-small); }
+.option-grid input, .settings-list input { width: auto; min-height: auto; accent-color: var(--white); }
+.field { display: grid; gap: 5px; color: var(--white-78); font-size: 11px; font-weight: 700; }
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.field-inline { display: flex; align-items: center; gap: 8px; color: var(--white-78); }
+.field-inline select { width: 180px; }
+.code-area { min-height: 250px; font-family: var(--font-code); font-size: 11px; line-height: 1.55; }
+.warning-box, .status-line, .permission-note { margin: 0; padding: 9px 11px; border: 1px dashed var(--white-38); color: var(--white-78); }
+.empty-state { display: grid; justify-items: center; gap: 4px; padding: 46px 20px; border: 1px dashed var(--white-20); color: var(--white-60); text-align: center; }
+.toast { position: fixed; right: 12px; bottom: 12px; z-index: 50; max-width: 420px; padding: 11px 13px; border: 1px solid var(--white); background: var(--black); color: var(--white); box-shadow: var(--shadow); }
+.toast[data-kind="error"] { border-style: double; border-width: 3px; }

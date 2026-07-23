@@ -1,0 +1,22 @@
+[
+  {
+    "name": "session_example",
+    "value": "replace-with-a-non-production-test-value",
+    "domain": "example.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": true,
+    "sameSite": "lax",
+    "session": true
+  },
+  {
+    "name": "theme",
+    "value": "monochrome",
+    "domain": "example.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false,
+    "sameSite": "strict",
+    "session": true
+  }
+]

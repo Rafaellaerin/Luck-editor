@@ -1,0 +1,11 @@
+Rust                4500 lines
+TypeScript          1918 lines
+C                   1650 lines
+JavaScript          1521 lines
+C++                 1405 lines
+Markdown             910 lines
+CSS                  533 lines
+HTML                 424 lines
+JSON                 138 lines
+YAML                 137 lines
+TOML                 100 lines

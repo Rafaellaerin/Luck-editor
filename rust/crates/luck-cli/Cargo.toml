@@ -1,0 +1,17 @@
+[package]
+name = "luck-cli"
+description = "Command-line parser, converter, query engine, and auditor for Luck Editor cookie files."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "luck"
+path = "src/main.rs"
+
+[dependencies]
+clap.workspace = true
+luck-core = { path = "../luck-core" }
+serde_json.workspace = true

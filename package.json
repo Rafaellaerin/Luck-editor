@@ -1,0 +1,23 @@
+{
+  "name": "luck-editor",
+  "version": "5.0.0",
+  "private": true,
+  "description": "Security-focused, open-source cookie editor and multi-language parsing toolkit.",
+  "type": "module",
+  "scripts": {
+    "clean": "node scripts/clean.mjs",
+    "typecheck": "tsc --noEmit",
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/javascript/*.test.mjs",
+    "validate": "node scripts/validate.mjs",
+    "package": "node scripts/package.mjs",
+    "report:languages": "node scripts/language-report.mjs",
+    "verify": "npm run typecheck && npm test && npm run build && npm run test:built && npm run validate",
+    "serve:web": "node scripts/serve-web.mjs",
+    "test:built": "node --test tests/built/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}

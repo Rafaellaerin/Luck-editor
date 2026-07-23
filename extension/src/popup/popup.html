@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Luck Editor</title>
+  <link rel="stylesheet" href="../styles/tokens.css">
+  <link rel="stylesheet" href="../styles/base.css">
+  <link rel="stylesheet" href="../styles/components.css">
+  <link rel="stylesheet" href="../styles/popup.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">LOCAL COOKIE TOOL</p>
+      <h1>Luck Editor</h1>
+    </div>
+    <div class="header-context">
+      <strong id="current-domain">Loading</strong>
+      <span id="cookie-count">0 of 0</span>
+    </div>
+  </header>
+
+  <p id="permission-note" class="permission-note">Checking the active page.</p>
+
+  <nav class="tabs" role="tablist" aria-label="Luck Editor sections">
+    <button class="tab is-active" type="button" role="tab" aria-selected="true" data-panel="cookies">Cookies</button>
+    <button class="tab" type="button" role="tab" aria-selected="false" data-panel="import">Import</button>
+    <button class="tab" type="button" role="tab" aria-selected="false" data-panel="export">Export</button>
+    <button class="tab" type="button" role="tab" aria-selected="false" data-panel="snapshots">Snapshots</button>
+    <button class="tab" type="button" role="tab" aria-selected="false" data-panel="settings">Settings</button>
+  </nav>
+
+  <main>
+    <section class="panel" data-panel-view="cookies">
+      <div class="toolbar">
+        <label class="search-field">
+          <span class="sr-only">Search cookies</span>
+          <input id="search" type="search" maxlength="256" placeholder="Search name, domain, path, or value" autocomplete="off">
+        </label>
+        <button id="refresh" class="button" type="button">Refresh</button>
+        <button id="add-cookie" class="button button-primary" type="button">Add</button>
+      </div>
+      <div class="toolbar toolbar-secondary">
+        <button id="select-all" class="button button-small" type="button">Select visible</button>
+        <button id="delete-selected" class="button button-small button-danger" type="button" disabled>Delete selected</button>
+        <button id="toggle-values" class="button button-small" type="button">Reveal values</button>
+        <button id="all-domains" class="button button-small" type="button">All domains</button>
+        <span id="selection-count" class="muted">None selected</span>
+      </div>
+      <div id="empty-state" class="empty-state" hidden>
+        <strong>No cookies found</strong>
+        <span>The current filter or page has no visible cookies.</span>
+      </div>
+      <div id="cookie-list" class="cookie-list" aria-live="polite"></div>
+    </section>
+
+    <section class="panel" data-panel-view="import" hidden>
+      <div class="section-heading">
+        <div><p class="eyebrow">STRICT PARSER</p><h2>Import cookies</h2></div>
+        <button id="import-file" class="button" type="button">Open file</button>
+      </div>
+      <input id="file-input" type="file" accept=".json,.txt,.cookies,.cookie" hidden>
+      <textarea id="import-input" class="code-area" spellcheck="false" placeholder="Paste JSON, Netscape, Cookie header, Set-Cookie, or name=value lines"></textarea>
+      <p id="import-status" class="status-line">Nothing parsed yet.</p>
+      <div class="option-grid">
+        <label><input id="import-secure" type="checkbox" checked> Force Secure</label>
+        <label><input id="import-http-only" type="checkbox"> Force HttpOnly</label>
+        <label><input id="import-overwrite" type="checkbox" checked> Overwrite existing</label>
+        <label><input id="import-session" type="checkbox" checked> Preserve session cookies</label>
+      </div>
+      <button id="run-import" class="button button-primary button-wide" type="button" disabled>Import validated cookies</button>
+    </section>
+
+    <section class="panel" data-panel-view="export" hidden>
+      <div class="section-heading"><div><p class="eyebrow">CONTROLLED OUTPUT</p><h2>Export cookies</h2></div></div>
+      <div class="toolbar">
+        <label class="field-inline">Format
+          <select id="export-format">
+            <option value="redacted-json">Redacted JSON</option>
+            <option value="json">JSON</option>
+            <option value="netscape">Netscape</option>
+            <option value="cookie-header">Cookie header</option>
+            <option value="set-cookie">Set-Cookie</option>
+            <option value="curl">curl command</option>
+          </select>
+        </label>
+        <button id="run-export" class="button button-primary" type="button">Generate</button>
+      </div>
+      <p id="export-warning" class="warning-box">Redacted JSON is selected by default.</p>
+      <textarea id="export-output" class="code-area" readonly spellcheck="false" placeholder="Generated output appears here"></textarea>
+      <div class="toolbar">
+        <button id="copy-export" class="button" type="button">Copy</button>
+        <button id="download-export" class="button" type="button">Download</button>
+      </div>
+    </section>
+
+    <section class="panel" data-panel-view="snapshots" hidden>
+      <div class="section-heading"><div><p class="eyebrow">MEMORY ONLY</p><h2>Temporary snapshots</h2></div></div>
+      <p class="warning-box">Snapshots use browser session storage and disappear when the extension or browser session ends. Values are redacted by default.</p>
+      <div class="toolbar">
+        <input id="snapshot-name" type="text" maxlength="80" placeholder="Snapshot name" autocomplete="off">
+        <button id="save-snapshot" class="button button-primary" type="button">Save current</button>
+        <button id="clear-snapshots" class="button button-danger" type="button">Clear all</button>
+      </div>
+      <div id="snapshot-empty" class="empty-state"><strong>No snapshots</strong><span>Create a temporary local snapshot above.</span></div>
+      <div id="snapshot-list" class="snapshot-list"></div>
+    </section>
+
+    <section class="panel" data-panel-view="settings" hidden>
+      <div class="section-heading"><div><p class="eyebrow">LOCAL SETTINGS</p><h2>Safety controls</h2></div></div>
+      <div class="settings-list">
+        <label><input id="setting-confirm-single" type="checkbox"> Confirm single-cookie deletion</label>
+        <label><input id="setting-confirm-bulk" type="checkbox"> Confirm bulk deletion</label>
+        <label><input id="setting-mask-values" type="checkbox"> Mask cookie values in the list</label>
+        <label><input id="setting-auto-refresh" type="checkbox"> Reload the page after imports</label>
+        <label><input id="setting-export-http-only" type="checkbox"> Include HttpOnly cookies in exports</label>
+        <label><input id="setting-snapshot-values" type="checkbox"> Store values in temporary snapshots</label>
+      </div>
+      <div class="toolbar">
+        <button id="save-settings" class="button button-primary" type="button">Save settings</button>
+        <button id="open-options" class="button" type="button">Open full settings</button>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="cookie-dialog" class="cookie-dialog">
+    <form id="cookie-form" method="dialog">
+      <header class="dialog-header">
+        <h2 id="editor-title">Add cookie</h2>
+        <button id="close-editor" class="icon-button" type="button" aria-label="Close">×</button>
+      </header>
+      <div class="dialog-body">
+        <label class="field">Name<input id="edit-name" required maxlength="256" autocomplete="off" spellcheck="false"></label>
+        <label class="field">Value<textarea id="edit-value" maxlength="4096" rows="4" autocomplete="off" spellcheck="false"></textarea></label>
+        <div class="field-grid">
+          <label class="field">Domain<input id="edit-domain" required maxlength="253" autocomplete="off" spellcheck="false"></label>
+          <label class="field">Path<input id="edit-path" required maxlength="1024" value="/" autocomplete="off" spellcheck="false"></label>
+        </div>
+        <div class="field-grid">
+          <label class="field">SameSite<select id="edit-same-site"><option value="lax">Lax</option><option value="strict">Strict</option><option value="no_restriction">None</option></select></label>
+          <label class="field">Expiration<input id="edit-expiration" type="datetime-local"></label>
+        </div>
+        <div class="option-grid">
+          <label><input id="edit-secure" type="checkbox"> Secure</label>
+          <label><input id="edit-http-only" type="checkbox"> HttpOnly</label>
+          <label><input id="edit-session" type="checkbox"> Session cookie</label>
+        </div>
+        <p id="editor-errors" class="form-errors" role="alert"></p>
+      </div>
+      <footer class="dialog-footer">
+        <button id="cancel-editor" class="button" type="button">Cancel</button>
+        <button class="button button-primary" type="submit">Save cookie</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <script type="module" src="./popup.js"></script>
+</body>
+</html>

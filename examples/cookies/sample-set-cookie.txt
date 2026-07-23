@@ -1,0 +1,2 @@
+Set-Cookie: session_example=replace-with-a-non-production-test-value; Path=/; Secure; HttpOnly; SameSite=Lax
+Set-Cookie: theme=monochrome; Path=/; Secure; SameSite=Strict

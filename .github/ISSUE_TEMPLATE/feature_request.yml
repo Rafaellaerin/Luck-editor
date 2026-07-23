@@ -1,0 +1,23 @@
+name: Feature request
+description: Proponha uma melhoria compatível com o modelo de segurança.
+title: "[Feature] "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema de usuário
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposta
+    validations:
+      required: true
+  - type: textarea
+    id: security
+    attributes:
+      label: Impacto em permissões, storage e segurança
+    validations:
+      required: true

@@ -1,0 +1,14 @@
+node_modules/
+build/
+dist/
+target/
+*.zip
+*.crx
+*.pem
+*.log
+.DS_Store
+.vscode/
+.idea/
+coverage/
+cmake-build-*/
+native/build/
